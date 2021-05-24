@@ -37,5 +37,11 @@ public class UserService implements UserDetailsService{
 		
 		return new User(userEntity.getEmail(), userEntity.getPassword(), true, true, true, true, new ArrayList<>());
 	}
+	
+	public UserDTO findUserByEmail(String email) {
+		UserEntity userEntity =repository.findByEmail(email)
+				.orElseThrow(()-> new UsernameNotFoundException("User Email not found" ));
+		return mapper.map(userEntity, UserDTO.class);
+	}
 
 }
